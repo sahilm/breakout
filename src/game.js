@@ -8,8 +8,13 @@ var Game = {
         }
 
         clearScreen();
-        Ball.draw(drawingContext, state);
-        Paddle.draw(drawingContext, state);
+        if (state.gameOver) {
+            alert("GAME OVER!");
+            document.location.reload();
+        } else {
+            Ball.draw(drawingContext, state);
+            Paddle.draw(drawingContext, state);
+        }
     },
 
     update: function (state) {

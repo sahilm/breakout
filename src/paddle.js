@@ -13,6 +13,7 @@ var Paddle = {
     update: function (state) {
         var paddle = state.paddle;
         var boundary = state.boundary;
+        var ball = state.ball;
 
         if (state.rightKeyPressed && paddle.x < (boundary.width - paddle.width)) {
             paddle.x += paddle.speed;
@@ -20,6 +21,13 @@ var Paddle = {
 
         if (state.leftKeyPressed && paddle.x > 0) {
             paddle.x -= paddle.speed;
+        }
+
+
+        // If the ball has collided with the paddle
+        if (ball.y >= (boundary.height - paddle.height) && ball.x > paddle.x && ball.x < paddle.x + paddle.width) {
+            // Reverse its direction
+            ball.speedY = -ball.speedY;
         }
     }
 };

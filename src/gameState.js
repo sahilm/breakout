@@ -24,6 +24,7 @@ var GameState = {
             },
             rightKeyPressed: false,
             leftKeyPressed: false,
+            gameOver: false,
         }
     }
 };

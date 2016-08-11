@@ -5,8 +5,8 @@ var Boundary = {
         var boundary = state.boundary;
         var ballXPosition = ball.x + ball.speedX;
 
-        // Reverse the y direction of the ball if it collides with top or bottom boundary
-        if (ballYPosition < boundary.originY || ballYPosition > (boundary.height - ball.radius)) {
+        // Reverse the y direction of the ball if it collides with top boundary
+        if (ballYPosition < boundary.originY) {
             ball.speedY = -ball.speedY;
         }
 
@@ -14,5 +14,12 @@ var Boundary = {
         if (ballXPosition < boundary.originX || ballXPosition > (boundary.width - ball.radius)) {
             ball.speedX = -ball.speedX;
         }
+
+        // End the game if the ball reaches the bottom boundary
+        var padding = 7;
+        if (ballYPosition > (boundary.height + ball.radius + padding)) {
+            state.gameOver = true;
+        }
+
     }
 };
