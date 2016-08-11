@@ -1,19 +1,19 @@
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
-var x = canvas.width / 2;
-var y = canvas.height - 30;
+var ballX = canvas.width / 2;
+var ballY = canvas.height - 30;
 var paddleHeight = 10;
 var paddleWidth = 75;
 var paddleX = (canvas.width - paddleWidth) / 2;
-var rightPressed = false;
-var leftPressed = false;
-var dx = 2;
-var dy = -2;
+var paddleSpeed = 5;
+var rightKeyPressed = false;
+var leftKeyPressed = false;
+var ballSpeedX = 4;
+var ballSpeedY = -4;
+var ballSpeedMultiplier = 1.05;
 var ballRadius = 10;
 var ballColors = ["#FFACAC", "#0095DD", "red", "green", "blue"];
-var ballSpeedMultiplier = 1.05;
 var ballColor = ballColors[0];
-var paddleSpeed = 5;
 var rightArrowKeyCode = 39;
 var leftArrowKeyCode = 37;
 
@@ -79,15 +79,15 @@ function drawBricks() {
 }
 
 function detectCollisionWithWalls() {
-    if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
-        dx = -dx;
+    if (ballX + ballSpeedX > canvas.width - ballRadius || ballX + ballSpeedX < ballRadius) {
+        ballSpeedX = -ballSpeedX;
     }
-    if (y + dy < ballRadius) {
-        dy = -dy;
+    if (ballY + ballSpeedY < ballRadius) {
+        ballSpeedY = -ballSpeedY;
     }
-    else if (y + dy > canvas.height - ballRadius) {
-        if (x > paddleX && x < paddleX + paddleWidth) {
-            dy = -dy * ballSpeedMultiplier;
+    else if (ballY + ballSpeedY > canvas.height - ballRadius) {
+        if (ballX > paddleX && ballX < paddleX + paddleWidth) {
+            ballSpeedY = -ballSpeedY * ballSpeedMultiplier;
         }
         else {
             lives--;
@@ -96,10 +96,10 @@ function detectCollisionWithWalls() {
                 document.location.reload();
             }
             else {
-                x = canvas.width / 2;
-                y = canvas.height - 30;
-                dx = 3;
-                dy = -3;
+                ballX = canvas.width / 2;
+                ballY = canvas.height - 30;
+                ballSpeedX = 3;
+                ballSpeedY = -3;
                 paddleX = (canvas.width - paddleWidth) / 2;
             }
         }
@@ -111,8 +111,8 @@ function detectCollisionWithBricks() {
         for (var r = 0; r < brickRowCount; r++) {
             var brick = bricks[c][r];
             if (!brick.hit) {
-                if (x > brick.x && x < brick.x + brickWidth && y > brick.y && y < brick.y + brickHeight) {
-                    dy = -dy;
+                if (ballX > brick.x && ballX < brick.x + brickWidth && ballY > brick.y && ballY < brick.y + brickHeight) {
+                    ballSpeedY = -ballSpeedY;
                     brick.hit = true;
                     flipBallColor();
                     score++;
@@ -141,18 +141,18 @@ function drawBall() {
     detectCollisionWithWalls();
     detectCollisionWithBricks();
     var startAngle = 0;
-    ctx.arc(x, y, ballRadius, startAngle, Math.PI * 2);
+    ctx.arc(ballX, ballY, ballRadius, startAngle, Math.PI * 2);
     ctx.fillStyle = ballColor;
     ctx.fill();
     ctx.closePath();
 }
 
 function drawPaddle() {
-    if (rightPressed && paddleX < canvas.width - paddleWidth) {
+    if (rightKeyPressed && paddleX < canvas.width - paddleWidth) {
         paddleX += paddleSpeed;
     }
 
-    if (leftPressed && paddleX > 0) {
+    if (leftKeyPressed && paddleX > 0) {
         paddleX -= paddleSpeed;
     }
 
@@ -170,26 +170,26 @@ function draw() {
     drawBricks();
     drawScore();
     drawLives();
-    x += dx;
-    y += dy;
+    ballX += ballSpeedX;
+    ballY += ballSpeedY;
     window.requestAnimationFrame(draw);
 }
 
 function keyDownHandler(e) {
     if (e.keyCode == rightArrowKeyCode) {
-        rightPressed = true;
+        rightKeyPressed = true;
     }
     if (e.keyCode === leftArrowKeyCode) {
-        leftPressed = true;
+        leftKeyPressed = true;
     }
 }
 
 function keyUpHandler(e) {
     if (e.keyCode == rightArrowKeyCode) {
-        rightPressed = false;
+        rightKeyPressed = false;
     }
     else if (e.keyCode == leftArrowKeyCode) {
-        leftPressed = false;
+        leftKeyPressed = false;
     }
 }
 
