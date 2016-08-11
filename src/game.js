@@ -21,5 +21,6 @@ var Game = {
     update: function (state) {
         Ball.update(state);
         Paddle.update(state);
+        Bricks.update(state);
     }
 };

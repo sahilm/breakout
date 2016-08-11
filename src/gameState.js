@@ -31,7 +31,8 @@ var GameState = {
                 padding: 10,
                 offsetTop: 30,
                 offsetLeft: 30,
-                color: "#0095DD"
+                color: "#0095DD",
+                hitMultiplier: 1.03,
             },
             bricks: [],
             rightKeyPressed: false,
