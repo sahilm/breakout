@@ -1,4 +1,15 @@
 var Ball = {
+    init: function (state) {
+        var ball = state.ball;
+        var paddle = state.paddle;
+        var boundary = state.boundary;
+        var minSpeedY = 2;
+
+        ball.x = paddle.x + (paddle.width / 2);
+        ball.y = boundary.height - paddle.height;
+        ball.speedY = -(Math.random() * (ball.speedX - minSpeedY) + minSpeedY);
+    },
+
     draw: function (drawingContext, state) {
         var ball = state.ball;
         drawingContext.beginPath();
@@ -36,8 +47,7 @@ var Ball = {
         }
 
         // End the game if the ball reaches the bottom boundary
-        var padding = 7;
-        if (ball.y > (boundary.height + ball.radius + padding)) {
+        if (ball.y > (boundary.height + ball.radius)) {
             state.gameOver = true;
         }
 

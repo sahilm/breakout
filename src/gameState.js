@@ -2,10 +2,10 @@ var GameState = {
     create: function (width, height) {
         var state = {
             ball: {
-                x: width / 2,
-                y: height / 2,
+                x: undefined,
+                y: undefined,
                 speedX: 4,
-                speedY: -4,
+                speedY: undefined,
                 radius: 10,
                 color: "#FFACAC"
             },
@@ -18,7 +18,7 @@ var GameState = {
             paddle: {
                 height: 10,
                 width: 75,
-                x: (width - 75) / 2,
+                x: undefined,
                 color: "#0095DD",
                 speed: 5,
                 hitMultiplier: 1.03
@@ -32,7 +32,7 @@ var GameState = {
                 offsetTop: 30,
                 offsetLeft: 30,
                 color: "#0095DD",
-                hitMultiplier: 1.03,
+                hitMultiplier: 1.03
             },
             bricks: [],
             rightKeyPressed: false,
@@ -41,6 +41,7 @@ var GameState = {
         };
 
         Paddle.init(state);
+        Ball.init(state);
         return state;
     }
 };
