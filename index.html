@@ -28,21 +28,38 @@
     var dx = 2;
     var dy = -2;
     var ballRadius = 10;
+    var ballColors = ["#FFACAC", "#0095DD", "red", "green", "blue"];
+    var ballColor = ballColors[0];
 
     function detectCollisions() {
         if (x + dx > (canvas.width - ballRadius) || x + dx < ballRadius) {
             dx = -dx;
+            flipBallColor();
         }
 
         if (y + dy > (canvas.height - ballRadius) || y + dy < ballRadius) {
             dy = -dy;
+            flipBallColor();
         }
     }
+
+    function flipBallColor() {
+        // Returns a random integer between min (included) and max (excluded)
+        function getRandomInt(min, max) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min)) + min;
+        }
+
+        var nextColor = (ballColors.indexOf(ballColor) + getRandomInt(1, ballColors.length)) % ballColors.length;
+        ballColor = ballColors[nextColor];
+    }
+
     function drawBall() {
         ctx.beginPath();
         detectCollisions();
         ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
-        ctx.fillStyle = "#0095DD";
+        ctx.fillStyle = ballColor;
         ctx.fill();
         ctx.closePath();
     }
