@@ -10,7 +10,7 @@ var rightKeyPressed = false;
 var leftKeyPressed = false;
 var ballSpeedX = 4;
 var ballSpeedY = -4;
-var ballSpeedMultiplier = 1.05;
+var ballSpeedMultiplier = 1.07;
 var ballRadius = 10;
 var ballColors = ["#FFACAC", "#0095DD", "red", "green", "blue"];
 var ballColor = ballColors[0];
@@ -30,19 +30,24 @@ var score = 0;
 
 var lives = 3;
 
+var gameFinished = false;
+
 function drawLives() {
     ctx.font = "16px Arial";
     ctx.fillStyle = "#0095DD";
     ctx.fillText("Lives: " + lives, canvas.width - 65, 20);
 }
 
+function atWinningScore() {
+    return score == brickRowCount * brickColumnCount;
+}
+
 function drawScore() {
     ctx.font = "16px Arial";
     ctx.fillStyle = "#0095DD";
     ctx.fillText("Score: " + score, 8, 20);
-    if (score == brickRowCount * brickColumnCount) {
-        alert("YOU WIN, CONGRATULATIONS!");
-        document.location.reload();
+    if (atWinningScore()) {
+        gameFinished = true;
     }
 }
 
@@ -92,8 +97,7 @@ function detectCollisionWithWalls() {
         else {
             lives--;
             if (!lives) {
-                alert("GAME OVER");
-                document.location.reload();
+                gameFinished = true;
             }
             else {
                 ballX = canvas.width / 2;
@@ -112,7 +116,7 @@ function detectCollisionWithBricks() {
             var brick = bricks[c][r];
             if (!brick.hit) {
                 if (ballX > brick.x && ballX < brick.x + brickWidth && ballY > brick.y && ballY < brick.y + brickHeight) {
-                    ballSpeedY = -ballSpeedY;
+                    ballSpeedY = -ballSpeedY * ballSpeedMultiplier;
                     brick.hit = true;
                     flipBallColor();
                     score++;
@@ -164,15 +168,23 @@ function drawPaddle() {
 }
 
 function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    drawBall();
-    drawPaddle();
-    drawBricks();
-    drawScore();
-    drawLives();
-    ballX += ballSpeedX;
-    ballY += ballSpeedY;
-    window.requestAnimationFrame(draw);
+    if (gameFinished) {
+        if (atWinningScore()) {
+            alert("YOU WIN!")
+        } else {
+            alert("GAME OVER");
+        }
+    } else {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawBall();
+        drawPaddle();
+        drawBricks();
+        drawScore();
+        drawLives();
+        ballX += ballSpeedX;
+        ballY += ballSpeedY;
+        window.requestAnimationFrame(draw);
+    }
 }
 
 function keyDownHandler(e) {
