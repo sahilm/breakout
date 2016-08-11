@@ -11,7 +11,27 @@ var Ball = {
 
     update: function (state) {
         var ball = state.ball;
-        ball.x = ball.x + ball.speedX;
-        ball.y = ball.y + ball.speedY;
+        var boundary = state.boundary;
+        var ballXPosition = ball.x + ball.speedX;
+        var ballYPosition = ball.y + ball.speedY;
+
+        ball.x = ballXPosition;
+        ball.y = ballYPosition;
+
+        // Reverse the y direction of the ball if it collides with top boundary
+        if (ball.y < boundary.originY) {
+            ball.speedY = -ball.speedY;
+        }
+
+        // Reverse the x direction of the ball if it collides with right or left boundary
+        if (ball.x < boundary.originX || ball.x > (boundary.width - ball.radius)) {
+            ball.speedX = -ball.speedX;
+        }
+
+        // End the game if the ball reaches the bottom boundary
+        var padding = 7;
+        if (ball.y > (boundary.height + ball.radius + padding)) {
+            state.gameOver = true;
+        }
     }
 };

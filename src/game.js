@@ -19,7 +19,6 @@ var Game = {
 
     update: function (state) {
         Ball.update(state);
-        Boundary.update(state);
         Paddle.update(state);
     }
 };
