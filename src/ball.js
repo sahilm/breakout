@@ -46,9 +46,12 @@ var Ball = {
             ball.speedY = -ball.speedY * paddle.hitMultiplier;
         }
 
-        // End the game if the ball reaches the bottom boundary
+        // Take a life if the ball goes below the bottom boundary
         if (ball.y > (boundary.height + ball.radius)) {
-            state.gameOver = true;
+            state.lives--;
+            // Reset the paddle and ball
+            Paddle.init(state);
+            Ball.init(state);
         }
 
 

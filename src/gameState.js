@@ -40,6 +40,7 @@ var GameState = {
             gameOver: false,
             score: 0,
             gameWon: false,
+            lives: 3,
         };
 
         Paddle.init(state);

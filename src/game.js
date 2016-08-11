@@ -19,7 +19,7 @@ var Game = {
             Paddle.draw(drawingContext, state);
             Bricks.draw(drawingContext, state);
             Score.draw(drawingContext, state);
-
+            Lives.draw(drawingContext, state);
         }
     },
 
@@ -28,5 +28,6 @@ var Game = {
         Paddle.update(state);
         Bricks.update(state);
         Score.update(state);
+        Lives.update(state);
     }
 };
