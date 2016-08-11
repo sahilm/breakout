@@ -1,6 +1,6 @@
 var GameState = {
     create: function (width, height) {
-        return {
+        var state = {
             ball: {
                 x: width / 2,
                 y: height / 2,
@@ -39,5 +39,8 @@ var GameState = {
             leftKeyPressed: false,
             gameOver: false
         };
+
+        Paddle.init(state);
+        return state;
     }
 };

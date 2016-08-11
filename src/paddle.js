@@ -1,4 +1,10 @@
 var Paddle = {
+    init: function (state) {
+        var paddle = state.paddle;
+        var boundary = state.boundary;
+        paddle.x = Math.random() * (boundary.width - paddle.width);
+    },
+
     draw: function (drawingContext, state) {
         var paddle = state.paddle;
         var boundary = state.boundary;
