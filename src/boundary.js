@@ -6,12 +6,12 @@ var Boundary = {
         var ballXPosition = ball.x + ball.speedX;
 
         // Reverse the y direction of the ball if it collides with top or bottom boundary
-        if (ballYPosition < boundary.originY || ballYPosition > boundary.height) {
+        if (ballYPosition < boundary.originY || ballYPosition > (boundary.height - ball.radius)) {
             ball.speedY = -ball.speedY;
         }
 
         // Reverse the x direction of the ball if it collides with right or left boundary
-        if (ballXPosition < boundary.originX || ballXPosition > boundary.width) {
+        if (ballXPosition < boundary.originX || ballXPosition > (boundary.width - ball.radius)) {
             ball.speedX = -ball.speedX;
         }
     }
