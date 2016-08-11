@@ -27,7 +27,7 @@ var Paddle = {
         // If the ball has collided with the paddle
         if (ball.y >= (boundary.height - paddle.height) && ball.x > paddle.x && ball.x < paddle.x + paddle.width) {
             // Reverse its direction
-            ball.speedY = -ball.speedY;
+            ball.speedY = -ball.speedY * paddle.hitMultiplier;
         }
     }
 };

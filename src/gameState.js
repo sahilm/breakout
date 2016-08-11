@@ -20,7 +20,8 @@ var GameState = {
                 width: 75,
                 x: (width - 75) / 2,
                 color: "#0095DD",
-                speed: 5
+                speed: 5,
+                hitMultiplier: 1.03,
             },
             rightKeyPressed: false,
             leftKeyPressed: false,
