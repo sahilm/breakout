@@ -14,6 +14,7 @@ var Game = {
         } else {
             Ball.draw(drawingContext, state);
             Paddle.draw(drawingContext, state);
+            Bricks.draw(drawingContext, state);
         }
     },
 

@@ -21,11 +21,23 @@ var GameState = {
                 x: (width - 75) / 2,
                 color: "#0095DD",
                 speed: 5,
-                hitMultiplier: 1.03,
+                hitMultiplier: 1.03
             },
+            brickConfiguration: {
+                rows: 3,
+                columns: 5,
+                width: 75,
+                height: 20,
+                padding: 10,
+                offsetTop: 30,
+                offsetLeft: 30,
+                color: "#0095DD",
+                initialized: false,
+            },
+            bricks: [],
             rightKeyPressed: false,
             leftKeyPressed: false,
-            gameOver: false,
-        }
+            gameOver: false
+        };
     }
 };
