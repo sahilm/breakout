@@ -34,36 +34,52 @@
     var dy = -2;
     var ballRadius = 10;
     var ballColors = ["#FFACAC", "#0095DD", "red", "green", "blue"];
+    var ballSpeedMultiplier = 1.02;
     var ballColor = ballColors[0];
+    var paddleSpeed = 5;
+    var rightArrowKeyCode = 39;
+    var leftArrowKeyCode = 37;
 
     function detectCollisions() {
+        // Returns a random integer between min (included) and max (excluded)
         if (x + dx > (canvas.width - ballRadius) || x + dx < ballRadius) {
             dx = -dx;
             flipBallColor();
         }
 
-        if (y + dy > (canvas.height - ballRadius) || y + dy < ballRadius) {
+        if (y + dy < ballRadius) {
             dy = -dy;
             flipBallColor();
+        }
+
+        if (y + dy > (canvas.height - ballRadius)) {
+            if (x > paddleX && x < paddleX + paddleWidth) {
+                dy = -dy * ballSpeedMultiplier;
+            }
+            else {
+                alert("GAME OVER");
+                document.location.reload();
+            }
         }
     }
 
     function flipBallColor() {
-        // Returns a random integer between min (included) and max (excluded)
         function getRandomInt(min, max) {
             min = Math.ceil(min);
             max = Math.floor(max);
             return Math.floor(Math.random() * (max - min)) + min;
         }
 
-        var nextColor = (ballColors.indexOf(ballColor) + getRandomInt(1, ballColors.length)) % ballColors.length;
+        var min = 1;
+        var nextColor = (ballColors.indexOf(ballColor) + getRandomInt(min, ballColors.length)) % ballColors.length;
         ballColor = ballColors[nextColor];
     }
 
     function drawBall() {
         ctx.beginPath();
         detectCollisions();
-        ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
+        var startAngle = 0;
+        ctx.arc(x, y, ballRadius, startAngle, Math.PI * 2);
         ctx.fillStyle = ballColor;
         ctx.fill();
         ctx.closePath();
@@ -71,11 +87,11 @@
 
     function drawPaddle() {
         if (rightPressed && paddleX < canvas.width - paddleWidth) {
-            paddleX += 10;
+            paddleX += paddleSpeed;
         }
 
         if (leftPressed && paddleX > 0) {
-            paddleX -= 10;
+            paddleX -= paddleSpeed;
         }
 
         ctx.beginPath();
@@ -94,19 +110,19 @@
     }
 
     function keyDownHandler(e) {
-        if (e.keyCode == 39) {
+        if (e.keyCode == rightArrowKeyCode) {
             rightPressed = true;
         }
-        else if (e.keyCode == 37) {
+        if (e.keyCode === leftArrowKeyCode) {
             leftPressed = true;
         }
     }
 
     function keyUpHandler(e) {
-        if (e.keyCode == 39) {
+        if (e.keyCode == rightArrowKeyCode) {
             rightPressed = false;
         }
-        else if (e.keyCode == 37) {
+        else if (e.keyCode == leftArrowKeyCode) {
             leftPressed = false;
         }
     }
