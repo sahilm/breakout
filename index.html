@@ -18,9 +18,26 @@
 </head>
 <body>
 
-<canvas id="myCanvas" width="480" height="320"></canvas>
+<canvas id="canvas" width="480" height="320"></canvas>
 
-<script src="index.js"></script>
+<script src="src/gameState.js"></script>
+<script src="src/game.js"></script>
+<script src="src/boundary.js"></script>
+<script src="src/ball.js"></script>
+<script>
+    var canvas = document.getElementById("canvas");
+    var drawingContext = canvas.getContext("2d");
 
+    var state = GameState.create(canvas.width, canvas.height);
+
+    function draw() {
+        Game.update(state);
+        Game.draw(drawingContext, state, canvas.width, canvas.height);
+
+        window.requestAnimationFrame(draw);
+    }
+
+    draw();
+</script>
 </body>
 </html>
