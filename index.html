@@ -25,6 +25,7 @@
 <script src="src/ball.js"></script>
 <script src="src/paddle.js"></script>
 <script src="src/keyboard.js"></script>
+<script src="src/mouse.js"></script>
 <script src="src/bricks.js"></script>
 <script src="src/score.js"></script>
 <script src="src/lives.js"></script>
@@ -38,6 +39,7 @@
         Game.update(state);
         Game.draw(drawingContext, state, canvas.width, canvas.height);
         Keyboard.setup(document, state);
+        Mouse.setup(document, state, canvas);
         window.requestAnimationFrame(draw);
     }
 
