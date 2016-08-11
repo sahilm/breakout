@@ -70,8 +70,8 @@
                 if (!brick.hit) {
                     var brickX = (c * (brickWidth + brickPadding)) + brickOffsetLeft;
                     var brickY = (r * (brickHeight + brickPadding)) + brickOffsetTop;
-                    bricks[c][r].x = brickX;
-                    bricks[c][r].y = brickY;
+                    brick.x = brickX;
+                    brick.y = brickY;
                     ctx.beginPath();
                     ctx.rect(brickX, brickY, brickWidth, brickHeight);
                     ctx.fillStyle = "#0095DD";
