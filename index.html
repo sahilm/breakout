@@ -195,6 +195,7 @@
         drawLives();
         x += dx;
         y += dy;
+        window.requestAnimationFrame(draw);
     }
 
     function keyDownHandler(e) {
@@ -228,8 +229,7 @@
     document.addEventListener("keyup", keyUpHandler, false);
 
     createBricks();
-
-    setInterval(draw, 10);
+    draw();
 </script>
 
 </body>
