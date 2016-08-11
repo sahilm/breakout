@@ -54,7 +54,11 @@
         for (var c = 0; c < brickColumnCount; c++) {
             bricks[c] = [];
             for (var r = 0; r < brickRowCount; r++) {
-                bricks[c][r] = {x: 0, y: 0};
+                bricks[c][r] = {
+                    x: 0,
+                    y: 0,
+                    hit: false
+                };
             }
         }
     }
@@ -62,20 +66,23 @@
     function drawBricks() {
         for (var c = 0; c < brickColumnCount; c++) {
             for (var r = 0; r < brickRowCount; r++) {
-                var brickX = (c * (brickWidth + brickPadding)) + brickOffsetLeft;
-                var brickY = (r * (brickHeight + brickPadding)) + brickOffsetTop;
-                bricks[c][r].x = brickX;
-                bricks[c][r].y = brickY;
-                ctx.beginPath();
-                ctx.rect(brickX, brickY, brickWidth, brickHeight);
-                ctx.fillStyle = "#0095DD";
-                ctx.fill();
-                ctx.closePath();
+                var brick = bricks[c][r];
+                if (!brick.hit) {
+                    var brickX = (c * (brickWidth + brickPadding)) + brickOffsetLeft;
+                    var brickY = (r * (brickHeight + brickPadding)) + brickOffsetTop;
+                    bricks[c][r].x = brickX;
+                    bricks[c][r].y = brickY;
+                    ctx.beginPath();
+                    ctx.rect(brickX, brickY, brickWidth, brickHeight);
+                    ctx.fillStyle = "#0095DD";
+                    ctx.fill();
+                    ctx.closePath();
+                }
             }
         }
     }
 
-    function detectCollisions() {
+    function detectCollisionWithWalls() {
         if (x + dx > (canvas.width - ballRadius) || x + dx < ballRadius) {
             dx = -dx;
             flipBallColor();
@@ -96,6 +103,21 @@
         }
     }
 
+    function detectCollisionWithBricks() {
+        for (var c = 0; c < brickColumnCount; c++) {
+            for (var r = 0; r < brickRowCount; r++) {
+                var brick = bricks[c][r];
+                if (!brick.hit) {
+                    if (x > brick.x && x < brick.x + brickWidth && y > brick.y && y < brick.y + brickHeight) {
+                        dy = -dy;
+                        brick.hit = true;
+                    }
+                }
+            }
+        }
+    }
+
+
     function flipBallColor() {
         // Returns a random integer between min (included) and max (excluded)
         function getRandomInt(min, max) {
@@ -111,7 +133,8 @@
 
     function drawBall() {
         ctx.beginPath();
-        detectCollisions();
+        detectCollisionWithWalls();
+        detectCollisionWithBricks();
         var startAngle = 0;
         ctx.arc(x, y, ballRadius, startAngle, Math.PI * 2);
         ctx.fillStyle = ballColor;
