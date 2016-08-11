@@ -41,7 +41,6 @@
     var leftArrowKeyCode = 37;
 
     function detectCollisions() {
-        // Returns a random integer between min (included) and max (excluded)
         if (x + dx > (canvas.width - ballRadius) || x + dx < ballRadius) {
             dx = -dx;
             flipBallColor();
@@ -64,6 +63,7 @@
     }
 
     function flipBallColor() {
+        // Returns a random integer between min (included) and max (excluded)
         function getRandomInt(min, max) {
             min = Math.ceil(min);
             max = Math.floor(max);
