@@ -14,7 +14,16 @@ var GameState = {
                 height: height,
                 originX: 0,
                 originY: 0
-            }
+            },
+            paddle: {
+                height: 10,
+                width: 75,
+                x: (width - 75) / 2,
+                color: "#0095DD",
+                speed: 5
+            },
+            rightKeyPressed: false,
+            leftKeyPressed: false,
         }
     }
 };

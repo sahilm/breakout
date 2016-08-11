@@ -24,6 +24,8 @@
 <script src="src/game.js"></script>
 <script src="src/boundary.js"></script>
 <script src="src/ball.js"></script>
+<script src="src/paddle.js"></script>
+<script src="src/keyboard.js"></script>
 <script>
     var canvas = document.getElementById("canvas");
     var drawingContext = canvas.getContext("2d");
@@ -33,7 +35,7 @@
     function draw() {
         Game.update(state);
         Game.draw(drawingContext, state, canvas.width, canvas.height);
-
+        Keyboard.setup(document, state);
         window.requestAnimationFrame(draw);
     }
 
