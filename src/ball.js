@@ -11,6 +11,7 @@ var Ball = {
 
     update: function (state) {
         var ball = state.ball;
+        var paddle = state.paddle;
         var boundary = state.boundary;
         var ballXPosition = ball.x + ball.speedX;
         var ballYPosition = ball.y + ball.speedY;
@@ -28,10 +29,18 @@ var Ball = {
             ball.speedX = -ball.speedX;
         }
 
+        // If the ball has collided with the paddle
+        if (ball.y >= (boundary.height - paddle.height) && ball.x > paddle.x && ball.x < paddle.x + paddle.width) {
+            // Reverse its direction
+            ball.speedY = -ball.speedY * paddle.hitMultiplier;
+        }
+
         // End the game if the ball reaches the bottom boundary
         var padding = 7;
         if (ball.y > (boundary.height + ball.radius + padding)) {
             state.gameOver = true;
         }
+
+
     }
 };
