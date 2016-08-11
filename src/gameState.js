@@ -37,7 +37,9 @@ var GameState = {
             bricks: [],
             rightKeyPressed: false,
             leftKeyPressed: false,
-            gameOver: false
+            gameOver: false,
+            score: 0,
+            gameWon: false,
         };
 
         Paddle.init(state);

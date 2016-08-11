@@ -46,6 +46,7 @@ var Bricks = {
                         brick.hit = true;
                         // Reverse the direction of the ball
                         ball.speedY = -ball.speedY * brickConfiguration.hitMultiplier;
+                        state.score++;
                     }
                 }
             }
